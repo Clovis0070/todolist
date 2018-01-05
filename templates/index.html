@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% block content %}
+
+    <h1>TodoList</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Content</th>
+            <th>Completed</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        {% for item in todo_list %}
+            <tr>
+                <td>{{ item.content }}</td>
+                <td>
+                    {% if item.is_completed %}
+                        <del>Completed</del>
+                    {% else %}
+                        <form action="/complete/{{ item.id }}">
+                            <button class="btn btn-primary" type="submit">标记完成</button>
+                        </form>
+                    {% endif %}
+                </td>
+                <td>
+                    <form action="/delete/{{ item.id }}">
+                        <button class="btn btn-primary" type="submit">删除</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div>
+        <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+            添加条目
+        </button>
+        <!-- 模态框（Modal） -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <form method="post">
+                {% csrf_token %}
+                {#                csrf_token 用于防止跨域攻击，只允许本域的请求      #}
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5>Add Todo items</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">todo</span>
+                                </div>
+                                <input type="text" class="form-control"
+                                       placeholder="在此添加TODO条目"
+                                       aria-label="Username"
+                                       name="content"
+                                       aria-describedby="basic-addon1">
+                            </div>
+                        </div>
+                        <input type="hidden" name="action" value="add"/>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">
+                                提交
+                            </button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </form>
+        </div>
+    </div>
+
+
+{% endblock %}
