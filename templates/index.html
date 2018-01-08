@@ -7,6 +7,8 @@
         <thead>
         <tr>
             <th>Content</th>
+            <th>Create time</th>
+            <th>Update time</th>
             <th>Completed</th>
             <th>Delete</th>
         </tr>
@@ -17,6 +19,8 @@
         {% for item in todo_list %}
             <tr>
                 <td>{{ item.content }}</td>
+                <td>{{ item.create_at }}</td>
+                <td>{{ item.update_at }}</td>
                 <td>
                     {% if item.is_completed %}
                         <del>Completed</del>

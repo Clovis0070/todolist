@@ -19,7 +19,7 @@ def index(request):
 
     return render(request, 'index.html', locals())
 
-def complete(request, pk):
+def complete(request, pk):    # complete 按钮的响应，pk为输入变量，通过url匹配获得，在urls.py里。
     todo_item = get_object_or_404(Todolist, id=pk)
     todo_item.is_completed = True
     todo_item.save()
